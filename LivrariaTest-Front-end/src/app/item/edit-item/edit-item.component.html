@@ -1,0 +1,81 @@
+<h2>{{title}}</h2>
+<p-card>
+  <form ngSubmit="onSubmit" [formGroup]="itemForm">
+    <div class="row">
+      <div class="col-sm-6 col-xl-3 col-lg-4">
+        <p>Nome</p>
+        <input type="text" pKeyFilter="alpha" name="name" id="name" pInputText maxlength=50 formControlName="name" />
+        <p-message severity="error" text="Nome é obrigatório." *ngIf="itemForm.get('name').touched && !itemForm.get('name').valid && itemForm.get('name').errors['required']"></p-message>
+      </div>
+      <div class="col-sm-6 col-xl-2 col-lg-4">
+        <p for="unitOfMeasure">Un. de medida</p>
+        <p-dropdown [options]="unitsOfMeasure" formControlName="unitOfMeasure" optionLabel="label"></p-dropdown>
+      </div>
+      <div class="col-sm-6 col-xl-4 col-lg-4">
+        <p>Quantidade</p>
+        <div class="ui-inputgroup">
+          <input type="text" [pKeyFilter]="qtyMask" pInputText name="quantity" id="quantity" formControlName="quantity" />
+          <span class="ui-inputgroup-addon" *ngIf="measureAbbr">{{measureAbbr}}</span>
+        </div>
+        <p-message severity="error" text="Quantidade inválida." *ngIf="itemForm.get('quantity').touched && !itemForm.get('quantity').valid && itemForm.get('quantity').errors['wrongFormat']"></p-message>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-xl-3 col-sm-6 col-xs-12">
+        <p>Preço</p>
+        <input type="text" currencyMask formControlName="price" pInputText [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        <p-message severity="error" text="Preço é obrigatório." *ngIf="itemForm.get('price').touched  && !itemForm.get('price').valid && itemForm.get('price').errors['required']"></p-message>
+      </div>
+      <div class="col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+        <p>Perecível?</p>
+        <p-inputSwitch formControlName="perishable"></p-inputSwitch>
+      </div>
+      <div class="col-lg-4 col-xl-3 col-sm-6 col-xs-12">
+        <p>Data de Validade</p>
+        <p-calendar formControlName="validityDate" dateFormat="dd/mm/yy"></p-calendar>
+        <span *ngIf="itemForm.get('validityDate').touched && itemForm.get('validityDate').invalid">
+          <p-message severity="error" *ngIf="itemForm.get('validityDate').errors['required']" text="É obrigatório informar a data de validade quando o produto é perecível."></p-message>
+          <p-message severity="error" *ngIf="itemForm.get('validityDate').errors['expired']" text="O item encontra-se vencido."></p-message>
+        </span>
+      </div>
+      <div class="col-lg-4 col-xl-3 col-sm-6 col-xs-12">
+        <p>Data de Fabricação</p>
+        <p-calendar formControlName="manufactureDate" dateFormat="dd/mm/yy"></p-calendar>
+        <span *ngIf="itemForm.get('manufactureDate').touched && itemForm.get('manufactureDate').invalid">
+          <p-message *ngIf="itemForm.get('manufactureDate').errors['required']" text="É obrigatório informar a data de fabricação."
+            severity="error"></p-message>
+          <p-message *ngIf="itemForm.get('manufactureDate').errors['invalidDate']" text="A data de fabricação não pode ser maior que a data de validade."
+            severity="error"></p-message>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12" style="text-align:right">
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="ui-button-secondary" routerLink="items"></button>
+        <button pButton type="button" label="Salvar" icon="pi pi-check" style="margin-left: .25em" (click)="onSubmit()" [disabled]="itemForm.invalid"></button>
+      </div>
+    </div>
+  </form>
+</p-card>
+<p-toast key="msg"></p-toast>
+<p-toast position="center" key="c" (onClose)="onDeactivateChoose(false)" [modal]="true" [baseZIndex]="5000" key="dialog">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onDeactivateChoose(true)" label="Sair da página" class="ui-button-warning"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onDeactivateChoose(false)" label="Permanecer" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
