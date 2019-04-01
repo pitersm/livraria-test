@@ -33,6 +33,7 @@ namespace LivrariaTest.DAL
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddAutoMapper();
             services.AddMvc();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +43,8 @@ namespace LivrariaTest.DAL
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseMvc();
         }

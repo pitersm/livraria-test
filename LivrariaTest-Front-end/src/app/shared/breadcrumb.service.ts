@@ -4,41 +4,41 @@ import { MenuItem } from 'primeng/primeng';
 
 @Injectable({providedIn: 'root'})
 export class BreadcrumbService {
-  public breadcrumbItem: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>([]);
-  private itemBreadcrumbs: MenuItem[];
+  public breadcrumbBook: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>([]);
+  private bookBreadcrumbs: MenuItem[];
 
   constructor() {
   }
 
   setBreadcrumbs(page: string, name?: string) {
-    this.itemBreadcrumbs = [];
+    this.bookBreadcrumbs = [];
     const refList: MenuItem[] = this.getBreadcrumsLink(page, name);
-    this.breadcrumbItem.next(refList);
+    this.breadcrumbBook.next(refList);
   }
 
   private getBreadcrumsLink(page: string, name?: string): MenuItem[] {
-    this.itemBreadcrumbs = [];
+    this.bookBreadcrumbs = [];
 
     switch (page) {
       case 'home':
-        this.itemBreadcrumbs.push({ label: 'Home', routerLink: 'home' });
+        this.bookBreadcrumbs.push({ label: 'Home', routerLink: 'home' });
         break;
       case 'new':
-        this.itemBreadcrumbs.push({ label: 'Home', routerLink: 'home' });
-        this.itemBreadcrumbs.push({ label: 'Novo Item', routerLink: ['items', 'new'] });
+        this.bookBreadcrumbs.push({ label: 'Home', routerLink: 'home' });
+        this.bookBreadcrumbs.push({ label: 'Novo Livro', routerLink: ['books', 'new'] });
         break;
       case 'list':
-        this.itemBreadcrumbs.push({ label: 'Home', routerLink: 'home' });
-        this.itemBreadcrumbs.push({ label: 'Listagem de Itens', routerLink: 'items' });
+        this.bookBreadcrumbs.push({ label: 'Home', routerLink: 'home' });
+        this.bookBreadcrumbs.push({ label: 'Listagem de Livros', routerLink: 'books' });
         break;
       case 'edit':
-        this.itemBreadcrumbs.push({ label: 'Home' });
-        this.itemBreadcrumbs.push({ label: 'Listagem de Itens', routerLink: 'items' });
-        this.itemBreadcrumbs.push({ label: 'Editar Item ' + name, routerLink: ['items', name ] });
+        this.bookBreadcrumbs.push({ label: 'Home' });
+        this.bookBreadcrumbs.push({ label: 'Listagem de Livros', routerLink: 'books' });
+        this.bookBreadcrumbs.push({ label: 'Editar Livro ' + name, routerLink: ['books', name ] });
         break;
       default:
-        this.itemBreadcrumbs = [];
+        this.bookBreadcrumbs = [];
     }
-    return this.itemBreadcrumbs;
+    return this.bookBreadcrumbs;
   }
 }

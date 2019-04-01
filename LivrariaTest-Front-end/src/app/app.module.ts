@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,8 +23,8 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { EditItemComponent } from './item/edit-item/edit-item.component';
-import { ListItemComponent } from './item/list-item/list-item.component';
+import { EditBookComponent } from './book/edit-book/edit-book.component';
+import { ListBookComponent } from './book/list-book/list-book.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -38,8 +39,8 @@ import { PanelModule } from 'primeng/panel';
   declarations: [
     AppComponent,
     SidebarComponent,
-    EditItemComponent,
-    ListItemComponent,
+    EditBookComponent,
+    ListBookComponent,
     HeaderComponent,
     HomeComponent,
     BooleanPipePipe
@@ -48,7 +49,7 @@ import { PanelModule } from 'primeng/panel';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpModule,
+    HttpClientModule,
     BreadcrumbModule,
     KeyFilterModule,
     InputTextModule,

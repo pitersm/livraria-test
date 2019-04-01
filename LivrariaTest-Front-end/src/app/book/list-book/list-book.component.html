@@ -1,0 +1,42 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<h2 style="text-align:center">Listagem de Livros</h2>
+<p-table [value]="books" selectionMode="single" [(selection)]="selectedBook" (onRowSelect)="onRowSelect($event)" [paginator]="true"  [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Nome</th>
+        <th>Editora</th>
+        <th>Autor</th>
+        <th>ISBN</th>
+        <th>Preço</th>
+        <th>Dt. Publicação</th>
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-book>
+        <tr [pSelectableRow]="book">
+            <td>{{book.name}}</td>
+            <td>{{book.publisher}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.isbn}}</td>
+            <td>R$ {{book.price }}</td>
+            <td>{{book.publicationDate | date : 'dd/MM/yyyy'}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-book>
+      <div style="text-align:left">
+          <button type="button" pButton icon="fa fa-plus" (click)="showAdd()" label="Adicionar Livro"></button>
+      </div>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Detalhes do Livro" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+  <div class="ui-g ui-fluid" *ngIf="selectedBook">
+    O que deseja fazer com o livro selecionado?
+  </div>
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="deleteBook(selectedBook.name)" label="Excluir Livro"></button>
+          <button type="button" pButton icon="fa fa-check" (click)="showEdit()" label="Editar"></button>
+      </div>
+  </p-footer>
+</p-dialog>

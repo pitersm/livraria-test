@@ -28,9 +28,9 @@ namespace LivrariaTest.DAL.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            var value = _bookService.Get(id);
+            var value = await _bookService.Get(id);
 
             return Ok(value);
         }

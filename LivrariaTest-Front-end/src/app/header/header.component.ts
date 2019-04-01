@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.breadcrumb.breadcrumbItem.subscribe((val: MenuItem[]) => {
+      this.breadcrumb.breadcrumbBook.subscribe((val: MenuItem[]) => {
         if (val) {
           this.crumbs = val;
         }
