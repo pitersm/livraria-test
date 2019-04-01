@@ -8,12 +8,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookService {
-  baseUrl = 'http://localhost:50750/api/Book';
+  baseUrl = 'http://localhost:50750/api/';
   constructor(private http: HttpClient) { }
   books: Book[];
 
-  getBook(name: string) {
-    return JSON.parse(localStorage.getBook(name)) as Book;
+  getBook(id: string): Observable<Book> {
+    return this.http.get(this.baseUrl + 'book/' + id)
+      .pipe(map((response: any) => {
+        const book: Book = response;
+        return book;
+      }));
   }
 
   saveBook(book: Book) {
@@ -21,33 +25,18 @@ export class BookService {
   }
 
   listBooks(): Observable<Book[]> {
-    this.books = [];
-    return this.http.get(this.baseUrl)
+    return this.http.get(this.baseUrl + 'book')
       .pipe(map((response: any[]) => {
-        const books: Book[] = response;
-        return books;
+        this.books = response;
+        return this.books.slice();
       }));
   }
 
-  checkIfExists(name: string) {
-    // return this.listBooks().map((i) => i.name).includes(name);
+  checkIfExists(isbn: string): Observable<boolean> {
+    return this.http.get(this.baseUrl + 'isbnExists' + isbn);
   }
 
   deleteBook(name: string) {
     localStorage.removeBook(name);
-  }
-
-  showLocalStorage() {
-    let amount = 0;
-    let size = 0;
-    for (let i = 0; i < localStorage.length; ++i) {
-      const key = localStorage.key(i);
-      const value = localStorage.getBook(key);
-      console.log(amount, key, value);
-      size += key.length + value.length;
-      amount++;
-    }
-    console.log('Total entries:', amount);
-    console.log('Total size:', size);
   }
 }

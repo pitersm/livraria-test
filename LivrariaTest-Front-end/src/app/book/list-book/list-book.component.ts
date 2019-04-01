@@ -1,9 +1,11 @@
+import { Subject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from 'src/app/shared/breadcrumb.service';
 import { Book } from 'src/app/shared/book.model';
 import { MenuItem, MessageService } from 'primeng/api';
 import { BookService } from 'src/app/shared/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'app-list-book',
@@ -15,6 +17,8 @@ export class ListBookComponent implements OnInit {
   selectedBook: Book;
   menuItems: MenuItem[];
   displayDialog = false;
+  private ngUnsubscribe = new Subject();
+
   constructor(private breadcrumbService: BreadcrumbService,
     private bookService: BookService,
     private messageService: MessageService,
@@ -26,13 +30,7 @@ export class ListBookComponent implements OnInit {
       this.breadcrumbService.setBreadcrumbs('list');
     });
 
-    this.bookService.listBooks()
-      .subscribe(
-        (bookList: Book[]) => this.books = bookList,
-        error => this.messageService.add({
-          key: 'msg', severity: 'error', summary: 'Erro no servidor',
-          detail: error
-        }));
+    this.listBooks();
 
     this.menuItems = [
       {
@@ -43,10 +41,24 @@ export class ListBookComponent implements OnInit {
     ];
   }
 
-  deleteBook(name: string) {
-    this.bookService.deleteBook(name);
-    this.bookService.showLocalStorage();
-    // this.books = this.bookService.listBooks();
+  ngOnDestroy() {
+    this.ngUnsubscribe.complete();
+  }
+
+  listBooks() {
+    this.bookService.listBooks()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      (bookList: Book[]) => this.books = bookList,
+      error => this.messageService.add({
+        key: 'msg', severity: 'error', summary: 'Erro no servidor',
+        detail: error
+      }));
+  }
+
+  deleteBook(id: string) {
+    this.bookService.deleteBook(id);
+    this.listBooks();
   }
 
   onRowSelect(event) {
@@ -55,7 +67,7 @@ export class ListBookComponent implements OnInit {
   }
 
   showEdit() {
-    const path = this.selectedBook.name;
+    const path = this.selectedBook.id;
     this.router.navigate([path], { relativeTo: this.route });
   }
 

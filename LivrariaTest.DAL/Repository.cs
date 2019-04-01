@@ -27,5 +27,17 @@ namespace LivrariaTest.DAL
         {
             return _context.Set<TEntity>().Select(a => a);
         }
+
+        public Task<TEntity> Create(TEntity entity) {
+            await _context.Set<TEntity>.AddAsync(entity);
+            await _context.SaveChangesAsync();
+
+            return entity;
+        }
+
+        public Task Update(TEntity entity) {
+            _context.Entry(entity).State = System.Data.EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }

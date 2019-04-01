@@ -31,5 +31,15 @@ namespace LivrariaTest.DAL
                               .Select(a => _mapper.Map<BookDTO>(a))
                               .ToListAsync();
         }
+
+        public async Task<BookDTO> Create(BookDTO dto)
+        {
+            var newBook = await _repository.Save(_mapper.Map<Book>(dto));
+            return _mapper.Map<BookDTO>(newBook);
+        }
+
+        public async Task Update(BookDTO dto) {
+            await _repository.Update(_mapper.Map<Book>(dto));
+        }
     }
 }
