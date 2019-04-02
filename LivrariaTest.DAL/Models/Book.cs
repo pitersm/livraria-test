@@ -12,7 +12,7 @@ namespace LivrariaTest.DAL.Models
         public string Name { get; set; }
         public string Publisher { get; set; }
         public string Author { get; set; }
-        public string ISBN { get; set; }
+        public long ISBN { get; set; }
         public decimal Price { get; set; }
         public DateTime PublicationDate{ get; set; }
     }

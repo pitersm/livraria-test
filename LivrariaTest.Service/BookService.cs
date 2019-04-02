@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LivrariaTest.DAL;
 using LivrariaTest.DAL.Models;
+using LivrariaTest.DAL.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace LivrariaTest.DAL
 {
     public class BookService : IBookService
     {
-        private readonly IRepository<Book> _repository;
+        private readonly IBookRepository _repository;
         private readonly IMapper _mapper;
 
-        public BookService(IRepository<Book> repository, IMapper mapper)
+        public BookService(IBookRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -23,6 +24,11 @@ namespace LivrariaTest.DAL
         public async Task<BookDTO> Get(string id)
         {
             return _mapper.Map<BookDTO>(await _repository.Get(id));
+        }
+
+        public Task<bool> ISBNExists(long isbn)
+        {
+            return _repository.ISBNExists(isbn);
         }
 
         public Task<List<BookDTO>> List()
@@ -39,7 +45,9 @@ namespace LivrariaTest.DAL
         }
 
         public async Task Update(BookDTO dto) {
-            await _repository.Update(_mapper.Map<Book>(dto));
+            var repoObj = await _repository.Get(dto.Id.ToString());
+            repoObj = _mapper.Map<Book>(dto);
+            await _repository.Update(repoObj);
         }
     }
 }

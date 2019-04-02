@@ -10,13 +10,13 @@ export class BreadcrumbService {
   constructor() {
   }
 
-  setBreadcrumbs(page: string, name?: string) {
+  setBreadcrumbs(page: string, name?: string, id?: string) {
     this.bookBreadcrumbs = [];
-    const refList: MenuItem[] = this.getBreadcrumsLink(page, name);
+    const refList: MenuItem[] = this.getBreadcrumsLink(page, name, id);
     this.breadcrumbBook.next(refList);
   }
 
-  private getBreadcrumsLink(page: string, name?: string): MenuItem[] {
+  private getBreadcrumsLink(page: string, name?: string, id?: string): MenuItem[] {
     this.bookBreadcrumbs = [];
 
     switch (page) {
@@ -34,7 +34,7 @@ export class BreadcrumbService {
       case 'edit':
         this.bookBreadcrumbs.push({ label: 'Home' });
         this.bookBreadcrumbs.push({ label: 'Listagem de Livros', routerLink: 'books' });
-        this.bookBreadcrumbs.push({ label: 'Editar Livro ' + name, routerLink: ['books', name ] });
+        this.bookBreadcrumbs.push({ label: 'Editar Livro ' + name, routerLink: ['books', id] });
         break;
       default:
         this.bookBreadcrumbs = [];

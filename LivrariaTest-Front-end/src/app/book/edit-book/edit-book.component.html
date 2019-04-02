@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-6 col-xl-3 col-lg-4">
         <p>Nome</p>
-        <input type="text" pKeyFilter="alpha" name="name" id="name" pInputText maxlength=50 formControlName="name" />
+        <input type="text" name="name" id="name" pInputText maxlength=50 formControlName="name" />
         <p-message severity="error" text="Nome é obrigatório."
          *ngIf="bookForm.get('name').touched && !bookForm.get('name').valid && bookForm.get('name').errors['required']">
         </p-message>
@@ -18,14 +18,14 @@
       </div>
       <div class="col-sm-6 col-xl-3 col-lg-4">
         <p>Autor(a)</p>
-        <input type="text" pKeyFilter="alpha" name="author" id="author" pInputText maxlength=50 formControlName="author" />
+        <input type="text" name="author" id="author" pInputText maxlength=50 formControlName="author" />
         <p-message severity="error" text="O autor é obrigatório."
          *ngIf="bookForm.get('author').touched && !bookForm.get('author').valid && bookForm.get('author').errors['required']">
         </p-message>
       </div>
       <div class="col-sm-6 col-xl-2 col-lg-4">
         <p>ISBN</p>
-        <input type="text" [pKeyFilter]="pint" pInputText name="isbn" id="isbn" formControlName="isbn" />
+        <input type="text" pKeyFilter="pint" pInputText name="isbn" id="isbn" formControlName="isbn" maxlength="13"/>
         <span *ngIf="bookForm.get('isbn').touched && bookForm.get('isbn').invalid">
           <p-message severity="error" *ngIf="bookForm.get('isbn').errors['duplicated']" text="O ISBN informado já foi cadastrado."></p-message>
           <p-message severity="error" *ngIf="bookForm.get('isbn').errors['required']" text="É obrigatório informar o isbn."></p-message>
@@ -41,7 +41,8 @@
       <div class="col-lg-4 col-xl-3 col-sm-6 col-xs-12">
         <p>Data de Publicação</p>
         <p-calendar formControlName="publicationDate" dateFormat="dd/mm/yy"></p-calendar>
-        <p-message severity="error" *ngIf="bookForm.get('publicationDate').errors['required']" text="É obrigatório informar a data de publicação."></p-message>
+        <p-message severity="error" text="É obrigatório informar a data de publicação."
+          *ngIf="bookForm.get('publicationDate').touched && !bookForm.get('publicationDate').valid && bookForm.get('publicationDate').errors['required']" ></p-message>
       </div>
     </div>
     <div class="row">

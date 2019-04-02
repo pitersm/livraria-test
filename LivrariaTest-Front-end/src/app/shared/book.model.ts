@@ -4,7 +4,7 @@ export class Book {
   public name: string,
   public publisher: string,
   public author: string,
-  public isbn: string,
+  public isbn: number,
   public price: number,
   public publicationDate: Date) {}
 }

@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookService {
-  baseUrl = 'http://localhost:50750/api/';
+  baseUrl = 'http://localhost:50750/api/book/';
   constructor(private http: HttpClient) { }
   books: Book[];
 
   getBook(id: string): Observable<Book> {
-    return this.http.get(this.baseUrl + 'book/' + id)
+    return this.http.get(this.baseUrl + id)
       .pipe(map((response: any) => {
         const book: Book = response;
         return book;
@@ -21,19 +21,23 @@ export class BookService {
   }
 
   saveBook(book: Book) {
-    localStorage.setBook(book.name, JSON.stringify(book));
+    return this.http.post(this.baseUrl, book);
   }
 
   listBooks(): Observable<Book[]> {
-    return this.http.get(this.baseUrl + 'book')
+    return this.http.get(this.baseUrl)
       .pipe(map((response: any[]) => {
         this.books = response;
         return this.books.slice();
       }));
   }
 
-  checkIfExists(isbn: string): Observable<boolean> {
-    return this.http.get(this.baseUrl + 'isbnExists' + isbn);
+  checkIfExists(isbn: number): Observable<boolean> {
+    return this.http.get(this.baseUrl + 'isbn/' + isbn)
+    .pipe(map((response: any) => {
+      const exists: boolean = response;
+      return exists;
+    }));
   }
 
   deleteBook(name: string) {

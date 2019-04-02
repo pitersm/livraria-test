@@ -10,6 +10,8 @@ namespace LivrariaTest.DAL
     {
         IQueryable<TEntity> List();
         Task<TEntity> Get(string id);
-        Task<TEntity> Post(TEntity entity);
+        Task<TEntity> Save(TEntity entity);
+        Task Update(TEntity entity);
+        Task Delete(string id);
     }
 }

@@ -29,7 +29,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { TableModule } from 'primeng/table';
-import { BooleanPipePipe } from './shared/boolean-pipe.pipe';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
@@ -42,8 +41,7 @@ import { PanelModule } from 'primeng/panel';
     EditBookComponent,
     ListBookComponent,
     HeaderComponent,
-    HomeComponent,
-    BooleanPipePipe
+    HomeComponent
   ],
   imports: [
     BrowserModule,

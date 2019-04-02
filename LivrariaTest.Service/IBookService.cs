@@ -10,7 +10,8 @@ namespace LivrariaTest.DAL
     {
         Task<List<BookDTO>> List();
         Task<BookDTO> Get(string id);
-        Task<BookDTO> Save(BookDTO dto);
+        Task<BookDTO> Create(BookDTO dto);
         Task Update(BookDTO dto);
+        Task<bool> ISBNExists(long isbn);
     }
 }
