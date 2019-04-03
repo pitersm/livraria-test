@@ -24,6 +24,10 @@ export class BookService {
     return this.http.post(this.baseUrl, book);
   }
 
+  updateBook(book: Book) {
+    return this.http.put(this.baseUrl + book.id, book);
+  }
+
   listBooks(): Observable<Book[]> {
     return this.http.get(this.baseUrl)
       .pipe(map((response: any[]) => {
@@ -40,7 +44,7 @@ export class BookService {
     }));
   }
 
-  deleteBook(name: string) {
-    localStorage.removeBook(name);
+  deleteBook(id: string) {
+    return this.http.delete(this.baseUrl + id);
   }
 }

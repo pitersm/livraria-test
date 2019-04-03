@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace LivrariaTest.DAL
 {
@@ -42,6 +43,7 @@ namespace LivrariaTest.DAL
             {
                 throw new ArgumentNullException("entity");
             }
+            entities.Update(entity);
             await _context.SaveChangesAsync();
         }
 

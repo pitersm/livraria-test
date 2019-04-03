@@ -35,6 +35,7 @@ namespace LivrariaTest.DAL
         {
             return _repository.List()
                               .Select(a => _mapper.Map<BookDTO>(a))
+                              .OrderBy(a => a.Name)
                               .ToListAsync();
         }
 
@@ -45,9 +46,13 @@ namespace LivrariaTest.DAL
         }
 
         public async Task Update(BookDTO dto) {
-            var repoObj = await _repository.Get(dto.Id.ToString());
-            repoObj = _mapper.Map<Book>(dto);
+            var repoObj = _mapper.Map<Book>(dto);
             await _repository.Update(repoObj);
+        }
+
+        public async Task Delete(string id)
+        {
+            await _repository.Delete(id);
         }
     }
 }

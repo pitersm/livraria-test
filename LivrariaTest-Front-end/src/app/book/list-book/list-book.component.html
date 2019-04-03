@@ -1,7 +1,9 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 
 <h2 style="text-align:center">Listagem de Livros</h2>
-<p-table [value]="books" selectionMode="single" [(selection)]="selectedBook" (onRowSelect)="onRowSelect($event)" [paginator]="true"  [rows]="10" [responsive]="true">
+<p *ngIf="books.length > 0">Clique no registro para visualizar opções.</p>
+<p-table [value]="books" selectionMode="single" [(selection)]="selectedBook" (onRowSelect)="onRowSelect($event)"
+  [paginator]="true"  [rows]="10" [responsive]="true" *ngIf="books.length > 0">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th>Nome</th>
@@ -28,6 +30,11 @@
       </div>
   </ng-template>
 </p-table>
+<p *ngIf="books.length === 0">
+  Não foram cadastrados livros até o momento.
+  <br>
+  <button type="button" pButton icon="fa fa-plus" (click)="showAdd()" label="Adicionar Livro"></button>
+</p>
 
 <p-dialog header="Detalhes do Livro" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
   <div class="ui-g ui-fluid" *ngIf="selectedBook">
@@ -35,7 +42,7 @@
   </div>
   <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="deleteBook(selectedBook.name)" label="Excluir Livro"></button>
+          <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="deleteBook(selectedBook.id)" label="Excluir Livro"></button>
           <button type="button" pButton icon="fa fa-check" (click)="showEdit()" label="Editar"></button>
       </div>
   </p-footer>

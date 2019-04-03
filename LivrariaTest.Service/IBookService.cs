@@ -13,5 +13,6 @@ namespace LivrariaTest.DAL
         Task<BookDTO> Create(BookDTO dto);
         Task Update(BookDTO dto);
         Task<bool> ISBNExists(long isbn);
+        Task Delete(string id);
     }
 }

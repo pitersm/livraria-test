@@ -92,7 +92,8 @@ export class EditBookComponent
         Validators.required
       ),
       publicationDate: new FormControl(
-        this.isEdit ? new Date(this.book.publicationDate) : null
+        this.isEdit ? new Date(this.book.publicationDate) : null,
+        Validators.required
       )
     });
   }
@@ -110,7 +111,7 @@ export class EditBookComponent
 
   onSubmit() {
     this.book = new Book(
-      '',
+      this.isEdit ? this.book.id : '',
       this.bookForm.controls['name'].value,
       this.bookForm.controls['publisher'].value,
       this.bookForm.controls['author'].value,
@@ -120,7 +121,7 @@ export class EditBookComponent
     );
 
     if (this.isEdit) {
-      this.saveBook();
+      this.updateBook();
     } else {
       this.bookService
         .checkIfExists(this.book.isbn)
@@ -144,12 +145,31 @@ export class EditBookComponent
   }
 
   saveBook() {
-    this.bookService.saveBook(this.book).subscribe(() => {
+    this.bookService.saveBook(this.book)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(() => {
       this.messageService.add({
         key: 'msg',
         severity: 'info',
         summary: 'Livro Salvo!',
         detail: 'O livro ' + this.book.name + ' foi salvo com sucesso!'
+      });
+      this.bookForm.markAsUntouched();
+      setTimeout(() => {
+        this.router.navigate(['books']);
+      }, 3000);
+    }, (error: any) => this.alertServerError(error));
+  }
+
+  updateBook() {
+    this.bookService.updateBook(this.book)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(() => {
+      this.messageService.add({
+        key: 'msg',
+        severity: 'info',
+        summary: 'Livro Atualizado!',
+        detail: 'O livro ' + this.book.name + ' foi atualizado com sucesso!'
       });
       this.bookForm.markAsUntouched();
       setTimeout(() => {

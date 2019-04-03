@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreadcrumbService } from 'src/app/shared/breadcrumb.service';
 import { Book } from 'src/app/shared/book.model';
 import { MenuItem, MessageService } from 'primeng/api';
@@ -12,7 +12,7 @@ import { takeUntil } from "rxjs/operators";
   templateUrl: './list-book.component.html',
   styleUrls: ['./list-book.component.css']
 })
-export class ListBookComponent implements OnInit {
+export class ListBookComponent implements OnInit, OnDestroy {
   books: Book[];
   selectedBook: Book;
   menuItems: MenuItem[];
@@ -23,22 +23,16 @@ export class ListBookComponent implements OnInit {
     private bookService: BookService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+      this.route.data.subscribe((res: any) => {
+        this.books = res.books;
+      });
+    }
 
   ngOnInit() {
     setTimeout(() => {
       this.breadcrumbService.setBreadcrumbs('list');
     });
-
-    this.listBooks();
-
-    this.menuItems = [
-      {
-        label: 'Visualizar', icon: 'pi pi-search',
-        command: (event) => this.router.navigate(['/' + this.selectedBook.name], { relativeTo: this.route })
-      },
-      { label: 'Delete', icon: 'pi pi-times', command: (event) => this.deleteBook(this.selectedBook.name) }
-    ];
   }
 
   ngOnDestroy() {
@@ -47,18 +41,25 @@ export class ListBookComponent implements OnInit {
 
   listBooks() {
     this.bookService.listBooks()
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      (bookList: Book[]) => this.books = bookList,
-      error => this.messageService.add({
-        key: 'msg', severity: 'error', summary: 'Erro no servidor',
-        detail: error
-      }));
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (bookList: Book[]) => this.books = bookList,
+        error => this.messageService.add({
+          key: 'msg', severity: 'error', summary: 'Erro no servidor',
+          detail: error
+        }));
   }
 
   deleteBook(id: string) {
-    this.bookService.deleteBook(id);
-    this.listBooks();
+    this.bookService.deleteBook(id)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(() => {
+      this.displayDialog = false;
+      this.listBooks();
+    }, (error: any) => this.messageService.add({
+      key: 'msg', severity: 'error', summary: 'Erro no servidor',
+      detail: error
+    }));
   }
 
   onRowSelect(event) {

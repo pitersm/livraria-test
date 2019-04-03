@@ -11,7 +11,7 @@
       </div>
       <div class="col-sm-6 col-xl-3 col-lg-4">
         <p>Editora</p>
-        <input type="text" pKeyFilter="alpha" name="publisher" id="publisher" pInputText maxlength=50 formControlName="publisher" />
+        <input type="text" name="publisher" id="publisher" pInputText maxlength=50 formControlName="publisher" />
         <p-message severity="error" text="A editora é obrigatória."
          *ngIf="bookForm.get('publisher').touched && !bookForm.get('publisher').valid && bookForm.get('publisher').errors['required']">
         </p-message>

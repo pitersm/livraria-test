@@ -61,14 +61,16 @@ namespace LivrariaTest.DAL.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task Put(BookDTO value)
         {
+            await _bookService.Update(value);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(string id)
         {
+            await _bookService.Delete(id);
         }
     }
 }
