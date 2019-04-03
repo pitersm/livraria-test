@@ -1,0 +1,76 @@
+<h2>{{title}}</h2>
+<p-card>
+  <form ngSubmit="onSubmit" [formGroup]="bookForm">
+    <div class="row">
+      <div class="col-sm-6 col-xl-3 col-lg-4">
+        <p>Nome</p>
+        <input type="text" name="name" id="name" pInputText maxlength=50 formControlName="name" />
+        <p-message severity="error" text="Nome é obrigatório."
+         *ngIf="bookForm.get('name').touched && !bookForm.get('name').valid && bookForm.get('name').errors['required']">
+        </p-message>
+      </div>
+      <div class="col-sm-6 col-xl-3 col-lg-4">
+        <p>Editora</p>
+        <input type="text" name="publisher" id="publisher" pInputText maxlength=50 formControlName="publisher" />
+        <p-message severity="error" text="A editora é obrigatória."
+         *ngIf="bookForm.get('publisher').touched && !bookForm.get('publisher').valid && bookForm.get('publisher').errors['required']">
+        </p-message>
+      </div>
+      <div class="col-sm-6 col-xl-3 col-lg-4">
+        <p>Autor(a)</p>
+        <input type="text" name="author" id="author" pInputText maxlength=50 formControlName="author" />
+        <p-message severity="error" text="O autor é obrigatório."
+         *ngIf="bookForm.get('author').touched && !bookForm.get('author').valid && bookForm.get('author').errors['required']">
+        </p-message>
+      </div>
+      <div class="col-sm-6 col-xl-2 col-lg-4">
+        <p>ISBN</p>
+        <input type="text" pKeyFilter="pint" pInputText name="isbn" id="isbn" formControlName="isbn" maxlength="13"/>
+        <span *ngIf="bookForm.get('isbn').touched && bookForm.get('isbn').invalid">
+          <p-message severity="error" *ngIf="bookForm.get('isbn').errors['duplicated']" text="O ISBN informado já foi cadastrado."></p-message>
+          <p-message severity="error" *ngIf="bookForm.get('isbn').errors['required']" text="É obrigatório informar o isbn."></p-message>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-xl-3 col-sm-6 col-xs-12">
+        <p>Preço</p>
+        <input type="text" currencyMask formControlName="price" pInputText [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        <p-message severity="error" text="Preço é obrigatório." *ngIf="bookForm.get('price').touched && !bookForm.get('price').valid && bookForm.get('price').errors['required']"></p-message>
+      </div>
+      <div class="col-lg-4 col-xl-3 col-sm-6 col-xs-12">
+        <p>Data de Publicação</p>
+        <p-calendar formControlName="publicationDate" dateFormat="dd/mm/yy"></p-calendar>
+        <p-message severity="error" text="É obrigatório informar a data de publicação."
+          *ngIf="bookForm.get('publicationDate').touched && !bookForm.get('publicationDate').valid && bookForm.get('publicationDate').errors['required']" ></p-message>
+      </div>
+    </div>
+    <div class="row">
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12" style="text-align:right">
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="ui-button-secondary" routerLink="books"></button>
+        <button pButton type="button" label="Salvar" icon="pi pi-check" style="margin-left: .25em" (click)="onSubmit()" [disabled]="bookForm.invalid"></button>
+      </div>
+    </div>
+  </form>
+</p-card>
+<p-toast key="msg"></p-toast>
+<p-toast position="center" key="c" (onClose)="onDeactivateChoose(false)" [modal]="true" [baseZIndex]="5000" key="dialog">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onDeactivateChoose(true)" label="Sair da página" class="ui-button-warning"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="onDeactivateChoose(false)" label="Permanecer" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
