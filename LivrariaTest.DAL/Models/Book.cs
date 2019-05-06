@@ -14,6 +14,7 @@ namespace LivrariaTest.DAL.Models
         public string Author { get; set; }
         public long ISBN { get; set; }
         public decimal Price { get; set; }
+        public int Sales { get; set; }
         public DateTime PublicationDate{ get; set; }
     }
 }

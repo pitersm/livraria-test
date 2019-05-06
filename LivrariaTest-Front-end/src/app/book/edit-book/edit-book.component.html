@@ -44,6 +44,10 @@
         <p-message severity="error" text="É obrigatório informar a data de publicação."
           *ngIf="bookForm.get('publicationDate').touched && !bookForm.get('publicationDate').valid && bookForm.get('publicationDate').errors['required']" ></p-message>
       </div>
+      <div class="col-sm-6 col-xl-2 col-lg-4">
+        <p>Quantidade Vendida</p>
+        <input type="text" pKeyFilter="pint" pInputText name="sales" id="sales" formControlName="isbn" maxlength="5"/>
+      </div>
     </div>
     <div class="row">
     </div>

@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using LivrariaTest.DAL;
+﻿using AutoMapper;
 using LivrariaTest.DAL.Data;
-using LivrariaTest.DAL.Models;
 using LivrariaTest.DAL.Repository;
+using LivrariaTest.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace LivrariaTest.DAL
 {

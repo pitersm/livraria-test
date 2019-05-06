@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using LivrariaTest.DAL;
-using Microsoft.AspNetCore.Cors;
+using LivrariaTest.Service;
+using LivrariaTest.Service.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,6 +23,23 @@ namespace LivrariaTest.DAL.Controllers
         public async Task<IActionResult> List()
         {
             var values = await _bookService.List();
+
+            return Ok(values);
+        }
+
+        // GET: api/GetSalesReport
+        [HttpGet("getSalesByYear")]
+        public async Task<IActionResult> GetSalesByYear()
+        {
+            var values = await _bookService.GetSalesReportByYear();
+
+            return Ok(values);
+        }
+
+        [HttpGet("getSalesByMonth/{year}")]
+        public async Task<IActionResult> GetSalesByMonth(int year)
+        {
+            var values = await _bookService.GetSalesReportByMonth(year);
 
             return Ok(values);
         }

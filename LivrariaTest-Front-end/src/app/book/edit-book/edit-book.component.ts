@@ -87,6 +87,9 @@ export class EditBookComponent
         { value: this.isEdit ? this.book.isbn : null, disabled: this.isEdit },
         Validators.required
       ),
+      sales: new FormControl(
+        { value: this.isEdit ? this.book.sales : 0 },
+      ),
       price: new FormControl(
         this.isEdit ? this.book.price : null,
         Validators.required
@@ -116,6 +119,7 @@ export class EditBookComponent
       this.bookForm.controls['publisher'].value,
       this.bookForm.controls['author'].value,
       +this.bookForm.controls['isbn'].value,
+      +this.bookForm.controls['price'].value,
       this.bookForm.controls['price'].value,
       this.bookForm.controls['publicationDate'].value
     );

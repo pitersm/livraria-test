@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using LivrariaTest.DAL;
 using LivrariaTest.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using LivrariaTest.Service.DTO;
 
 namespace LivrariaTest.DAL.Profiles
 {

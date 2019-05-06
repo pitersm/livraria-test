@@ -38,13 +38,27 @@ export class BookService {
 
   checkIfExists(isbn: number): Observable<boolean> {
     return this.http.get(this.baseUrl + 'isbn/' + isbn)
-    .pipe(map((response: any) => {
-      const exists: boolean = response;
-      return exists;
-    }));
+      .pipe(map((response: any) => {
+        const exists: boolean = response;
+        return exists;
+      }));
   }
 
   deleteBook(id: string) {
     return this.http.delete(this.baseUrl + id);
+  }
+
+  getSalesByYear() {
+    return this.http.get(this.baseUrl + 'getSalesByYear');
+  }
+
+  getSalesByMonth() {
+    return this.http.get(this.baseUrl + 'getSalesByMonth')
+      .pipe(map((response: any[]) => {
+        return response.map((month) => {
+          month.category = Month[+month.category];
+          return month;
+        });
+      }));
   }
 }

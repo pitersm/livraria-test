@@ -11,8 +11,9 @@
         <th>Autor</th>
         <th>ISBN</th>
         <th>Preço</th>
+        <th>Vendas</th>
         <th>Dt. Publicação</th>
-    </tr>
+      </tr>
     </ng-template>
     <ng-template pTemplate="body" let-book>
         <tr [pSelectableRow]="book">
@@ -21,6 +22,7 @@
             <td>{{book.author}}</td>
             <td>{{book.isbn}}</td>
             <td>R$ {{book.price }}</td>
+            <td>{{ book.sales }} Un.</td>
             <td>{{book.publicationDate | date : 'dd/MM/yyyy'}}</td>
         </tr>
     </ng-template>
@@ -35,6 +37,10 @@
   <br>
   <button type="button" pButton icon="fa fa-plus" (click)="showAdd()" label="Adicionar Livro"></button>
 </p>
+
+<p-panel>
+  <div id="container"></div>
+</p-panel>
 
 <p-dialog header="Detalhes do Livro" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
   <div class="ui-g ui-fluid" *ngIf="selectedBook">

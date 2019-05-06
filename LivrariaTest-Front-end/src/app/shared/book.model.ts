@@ -6,5 +6,6 @@ export class Book {
   public author: string,
   public isbn: number,
   public price: number,
+  public sales: number,
   public publicationDate: Date) {}
 }

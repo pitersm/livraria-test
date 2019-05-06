@@ -3,12 +3,15 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LivrariaTest.Service.DTO;
 
-namespace LivrariaTest.DAL
+namespace LivrariaTest.Service
 {
     public interface IBookService
     {
         Task<List<BookDTO>> List();
+        Task<List<SalesReportDTO>> GetSalesReportByMonth(int year);
+        Task<List<SalesReportDTO>> GetSalesReportByYear();
         Task<BookDTO> Get(string id);
         Task<BookDTO> Create(BookDTO dto);
         Task Update(BookDTO dto);

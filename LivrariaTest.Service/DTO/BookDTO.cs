@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace LivrariaTest.DAL
+namespace LivrariaTest.Service.DTO
 {
     public class BookDTO
     {
@@ -21,6 +21,8 @@ namespace LivrariaTest.DAL
         public long ISBN { get; set; }
         [Required]
         public decimal Price { get; set; }
+        [Required]
+        public decimal Sales { get; set; }
         [Required]
         public DateTime PublicationDate { get; set; }
     }
